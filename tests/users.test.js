@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app-tours"); // Your Express app
-const api = supertest(app);
 const User = require("../models/userModel");
+
+// Create a new instance of the supertest agent
+const api = supertest(app);
 
 beforeAll(async () => {
   await User.deleteMany({});
