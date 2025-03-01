@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("./app-test"); // Your Express app
 const api = supertest(app);
-const Tour = require("../models/tourModel");
-const User = require("../models/userModel");
+const Tour = require("./models/tourModel");
+const User = require("./models/userModel");
 
 const tours = [
   {
