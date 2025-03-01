@@ -2,9 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
-const todoTaskRouter = require("./routers/todoTaskRouter");
+const jobsRouter = require("./routers/jobRouter");
 const userRouter = require("./routers/userRouter");
-const tourRouter = require("./routers/tourRouter");
 const {unknownEndpoint, errorHandler,} = require("./middleware/customMiddleware");
 
 // Express app
@@ -16,15 +15,14 @@ app.use(cors());
 // Middleware to parse JSON
 app.use(express.json());
 
-// Connect to MongoDB
+// Connect to db
 connectDB()
 
-// Routes
-app.use("/api/todoTasks", todoTaskRouter);
+// Routes for jobs and users
+app.use("/api/jobs", jobsRouter);
 app.use("/api/users", userRouter);
-app.use("/api/tours", tourRouter);
 
-// Middleware
+// Error handling middleware
 app.use(unknownEndpoint);
 app.use(errorHandler);
 

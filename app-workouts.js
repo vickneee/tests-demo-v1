@@ -1,15 +1,20 @@
 require('dotenv').config();
 const express = require('express');
-// const jobRouter = require("./routes/jobRouter");
-// const userRouter = require("./routes/userRouter");
-const {unknownEndpoint, errorHandler} = require(
-  './middleware/customMiddleware');
+const userRouter = require("./routers/userRouter");
+const workoutRouter = require("./routers/workoutRouter");
+const {unknownEndpoint, errorHandler} = require('./middleware/customMiddleware');
 const connectDB = require('./config/db');
 const logger = require('./utils/logger');
 const cors = require('cors');
 
 // Express app
 const app = express();
+
+// Middleware to allow cross-origin requests
+app.use(cors());
+
+// Middleware to parse JSON
+app.use(express.json());
 
 // Logger middleware
 app.use((req, res, next) => {
@@ -32,9 +37,9 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>');
 });
 
-// // Routes
-// app.use('/api/workouts', workoutRoutes);
-// app.use('/api/user', userRoutes);
+// Routes
+app.use('/api/workouts', workoutRouter);
+app.use('/api/user', userRouter);
 
 // // Path gets * all routes to index.html (frontend)
 // app.get('*', (req, res) => {
