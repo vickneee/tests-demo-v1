@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const supertest = require("supertest");
-const app = require("./app-test"); // Your Express app
+const app = require("../app-tours"); // Your Express app
 const api = supertest(app);
 const TodoTask = require("../models/todoTaskModel");
 const User = require("../models/userModel");
@@ -25,9 +25,13 @@ let token = null;
 beforeAll(async () => {
   await User.deleteMany({});
   const result = await api.post("/api/users/signup").send({
-    name: "Rami",
-    email: "mattiv@matti.fi",
-    password: "R3g5T7#gh",
+    name: "John Doe",
+    email: "test@example.com",
+    password: "S5g5T7!et",
+    phone_number: '1234567890',
+    gender: 'male',
+    date_of_birth: '1990-01-01',
+    membership_status: 'inactive'
   });
   token = result.body.token;
 });
@@ -81,7 +85,7 @@ describe("Given there are initially some todoTasks saved", () => {
       completed: false,
     };
     await api
-      .put("/api/todoTasks/" + todoTask._id)
+      .patch("/api/todoTasks/" + todoTask._id)
       .set("Authorization", "bearer " + token)
       .send(updatedTodoTask)
       .expect(200);
