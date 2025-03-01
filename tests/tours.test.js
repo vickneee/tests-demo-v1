@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const supertest = require("supertest");
-const app = require("./app-test"); // Your Express app
+const app = require("../app-tours"); // Your Express app
 const api = supertest(app);
-const Tour = require("./models/tourModel");
-const User = require("./models/userModel");
+const Tour = require("../models/tourModel");
+const User = require("../models/userModel");
 
 const tours = [
   {
@@ -50,6 +50,7 @@ describe("Given there are initially some tours saved", () => {
         .send(tours[1]),
     ]);
   });
+  
 
   it("should return all tours as JSON when GET /api/tours is called", async () => {
     await api
@@ -75,8 +76,9 @@ describe("Given there are initially some tours saved", () => {
 
   it("should return one tour by ID when GET /api/tours/:id is called", async () => {
     const tour = await Tour.findOne();
+    
     await api
-      .get("/api/tours/" + tour._id)
+      .get(`/api/tours/${tour._id}`)
       .set("Authorization", "bearer " + token)
       .expect(200)
       .expect("Content-Type", /application\/json/);
@@ -84,6 +86,7 @@ describe("Given there are initially some tours saved", () => {
 
   it("should update one tour by ID when PUT /api/tours/:id is called", async () => {
     const tour = await Tour.findOne();
+    
     const updatedTour = {
       name: "Updated Tour Name",
       info: "Updated tour information.",
@@ -91,7 +94,7 @@ describe("Given there are initially some tours saved", () => {
       price: "2000",
     };
     await api
-      .put("/api/tours/" + tour._id)
+      .patch("/api/tours/" + tour._id)
       .set("Authorization", "bearer " + token)
       .send(updatedTour)
       .expect(200);
@@ -103,6 +106,7 @@ describe("Given there are initially some tours saved", () => {
 
   it("should delete one tour by ID when DELETE /api/tours/:id is called", async () => {
     const tour = await Tour.findOne();
+    
     await api
       .delete("/api/tours/" + tour._id)
       .set("Authorization", "bearer " + token)
