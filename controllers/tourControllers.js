@@ -23,14 +23,14 @@ const createTour = async (req, res) => {
 
 // GET /tours/:tourId
 const getTourById = async (req, res) => {
-  const { tourId } = req.params;
+  const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(tourId)) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid tour ID" });
   }
 
   try {
-    const tour = await Tour.findById(tourId);
+    const tour = await Tour.findById(id);
     if (tour) {
       res.status(200).json(tour);
     } else {
@@ -43,15 +43,15 @@ const getTourById = async (req, res) => {
 
 // PUT /tours/:tourId
 const updateTour = async (req, res) => {
-  const { tourId } = req.params;
+  const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(tourId)) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid tour ID" });
   }
 
   try {
     const updatedTour = await Tour.findOneAndUpdate(
-      { _id: tourId },
+      { _id: id },
       { ...req.body },
       { new: true }
     );
@@ -67,14 +67,14 @@ const updateTour = async (req, res) => {
 
 // DELETE /tours/:tourId
 const deleteTour = async (req, res) => {
-  const { tourId } = req.params;
+  const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(tourId)) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid tour ID" });
   }
 
   try {
-    const deletedTour = await Tour.findOneAndDelete({ _id: tourId });
+    const deletedTour = await Tour.findOneAndDelete({ _id: id });
     if (deletedTour) {
       res.status(204).send(); // 204 No Content
     } else {

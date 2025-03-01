@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const {
   getAllTours,
   getTourById,
@@ -9,6 +8,11 @@ const {
 } = require("../controllers/tourControllers");
 const requireAuth = require("../middleware/requireAuth");
 
+const router = express.Router();
+
+// Require auth for all tours routes
+// router.use(requireAuth);
+
 // GET all tours
 router.get("/", getAllTours);
 
@@ -16,12 +20,12 @@ router.get("/", getAllTours);
 router.post("/", requireAuth, createTour);
 
 // GET a single tour
-router.get("/:tourId", requireAuth, getTourById);
+router.get("/:id", requireAuth, getTourById);
 
 // Patch Update a single tour
-router.patch("/:tourId", requireAuth, updateTour);
+router.patch("/:id", requireAuth, updateTour);
 
 // DELETE a single tour
-router.delete("/:tourId", requireAuth, deleteTour);
+router.delete("/:id", requireAuth, deleteTour);
 
 module.exports = router;
