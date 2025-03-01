@@ -6,10 +6,10 @@ const {
   getTodoTask,
   deleteTodoTask,
   updateTodoTask,
-} = require("../controllers/todoTaskController");
+} = require("../controllers/todoTaskControllers");
 const requireAuth = require("../middleware/requireAuth");
 
-// require auth for all todoTasks routes
+// Require auth for all todoTasks routes
 // router.use(requireAuth);
 
 // GET all TodoTasks
