@@ -1,11 +1,11 @@
 const users = [
   {
-    email: 'matti55@matti.fi',
-    password: "R3g5T7#gh"
+    email: 'ville@ville.fi',
+    password: "S0g5T7#gh"
   },
   {
-    email: 'mirja@mirja.fi',
-    password: "H5g67G#ge"
+    email: 'miia@miia.fi',
+    password: "N3g5T7#gh"
   },
 ];
 
