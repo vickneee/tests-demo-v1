@@ -11,8 +11,17 @@ const todoTaskSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-  }, 
+  },
   { timestamps: true }
 );
+
+// // Add virtual field id
+// todoTaskSchema.set('toJSON', {
+//   virtuals: true,
+//   transform: (doc, ret) => {
+//     ret.id = ret._id;
+//     return ret;
+//   },
+// });
 
 module.exports = mongoose.model("TodoTask", todoTaskSchema);
