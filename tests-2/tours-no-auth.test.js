@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const supertest = require("supertest");
-const app = require("../app-tours"); // Your Express app
-const Tour = require("../models/tourModel");
+const app = require("../app-tours-no-auth"); // Your Express app
+const Tour = require("../models/tourModel-no-auth");
 
 // Create a new instance of the supertest agent
 const api = supertest(app);
@@ -65,6 +65,7 @@ describe("Tour Controller", () => {
   // Test GET /api/tours/:id
   it("should return one tour by ID when GET /api/tours/:id is called", async () => {
     const tour = await Tour.findOne();
+    
     await api
       .get(`/api/tours/${tour._id}`)
       .expect(200)
@@ -73,7 +74,10 @@ describe("Tour Controller", () => {
 
   it("should return 404 for a non-existing tour ID", async () => {
     const nonExistentId = new mongoose.Types.ObjectId();
-    await api.get(`/api/tours/${nonExistentId}`).expect(404);
+    
+    await api
+    .get(`/api/tours/${nonExistentId}`)
+    .expect(404);
   });
 
   // Test PUT /api/tours/:id
@@ -85,7 +89,7 @@ describe("Tour Controller", () => {
     };
 
     await api
-      .put(`/api/tours/${tour._id}`)
+      .patch(`/api/tours/${tour._id}`)
       .send(updatedTour)
       .expect(200)
       .expect("Content-Type", /application\/json/);
@@ -97,13 +101,19 @@ describe("Tour Controller", () => {
 
   it("should return 400 for invalid tour ID when PUT /api/tours/:id", async () => {
     const invalidId = "12345";
-    await api.put(`/api/tours/${invalidId}`).send({}).expect(400);
+    
+    await api
+    .patch(`/api/tours/${invalidId}`)
+    .send({}).expect(400);
   });
 
   // Test DELETE /api/tours/:id
   it("should delete one tour by ID when DELETE /api/tours/:id is called", async () => {
     const tour = await Tour.findOne();
-    await api.delete(`/api/tours/${tour._id}`).expect(204);
+    
+    await api
+    .delete(`/api/tours/${tour._id}`)
+    .expect(204);
 
     const deletedTourCheck = await Tour.findById(tour._id);
     expect(deletedTourCheck).toBeNull();
@@ -111,6 +121,9 @@ describe("Tour Controller", () => {
 
   it("should return 400 for invalid tour ID when DELETE /api/tours/:id", async () => {
     const invalidId = "12345";
-    await api.delete(`/api/tours/${invalidId}`).expect(400);
+    
+    await api
+    .delete(`/api/tours/${invalidId}`)
+    .expect(400);
   });
 });
