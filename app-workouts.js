@@ -22,9 +22,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// // Serve the static files from the React app (frontend) in the dist folder
-// app.use(express.static('dist'))
-
 // Middlewares
 app.use(express.json());
 app.use(cors());
@@ -34,8 +31,11 @@ connectDB();
 
 // Home route (backend)
 app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>');
+  res.send('<h1>Hello World from Workouts!</h1>');
 });
+
+// // Serve the static files from the React app (frontend) in the dist folder
+// app.use(express.static('dist'))
 
 // Routes
 app.use('/api/workouts', workoutRouter);

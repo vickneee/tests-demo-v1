@@ -24,7 +24,7 @@ app.use("/uploads", express.static("public/uploads"));
 
 // Home route (backend)
 app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>');
+  res.send('<h1>Hello World from Gallery!</h1>');
 });
 
 // Route to display all images

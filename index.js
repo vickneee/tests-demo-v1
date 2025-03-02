@@ -1,4 +1,4 @@
-const app = require('./app-gallery')
+const app = require('./app-workouts')
 const http = require('http')
 const config = require('./utils/config')
 const logger = require('./utils/logger')

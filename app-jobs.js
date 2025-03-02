@@ -18,9 +18,23 @@ app.use(express.json());
 // Connect to db
 connectDB()
 
+// // Home route (backend)
+// app.get('/', (req, res) => {
+//   res.send('<h1>Hello World from Jobs!</h1>');
+// });
+
+// Serve the static files from the React app (frontend) in the dist folder
+app.use(express.static('dist'))
+
 // Routes for jobs and users
 app.use("/api/jobs", jobsRouter);
 app.use("/api/users", userRouter);
+
+
+// Path
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/dist/index.html');
+});
 
 // Error handling middleware
 app.use(unknownEndpoint);
