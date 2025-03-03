@@ -54,11 +54,13 @@ describe("Given there are initially some tours saved", () => {
   });
 
   it("should return all tours as JSON when GET /api/tours is called", async () => {
-    await api
+    const response  = await api
       .get("/api/tours")
       .set("Authorization", "bearer " + token)
       .expect(200)
       .expect("Content-Type", /application\/json/);
+    
+    expect(response.body).toHaveLength(tours.length);
   });
 
   it("should create one tour when POST /api/tours is called", async () => {
